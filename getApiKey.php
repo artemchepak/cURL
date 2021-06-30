@@ -10,12 +10,12 @@ $options = [
 
 $optionsString = http_build_query($options);;
 
-$ch = curl_init();
+$request = curl_init();
 
-curl_setopt($ch,CURLOPT_URL, $url . '?' . $optionsString);
-curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+curl_setopt($request,CURLOPT_URL, $url . '?' . $optionsString);
+curl_setopt($request,CURLOPT_RETURNTRANSFER, true);
 
-$result = curl_exec($ch);
+$result = curl_exec($request);
 $result = json_decode($result, true);
 
 curl_close($result);
@@ -23,3 +23,8 @@ curl_close($result);
 echo '<pre>';
 var_dump($result);
 echo '</pre>';
+
+$json = json_encode($result);
+$file = fopen('getApiKeyData.json','w+');
+fwrite($file, $json);
+fclose($file);
